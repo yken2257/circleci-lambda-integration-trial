@@ -48,5 +48,5 @@ workflows:
           filters:
             branches:
               only: master
-            requires:
-              - lint_and_test
+          requires:
+            - lint_and_test
