@@ -1,0 +1,50 @@
+version: 2.1
+executors:
+  deploy_container:
+    docker:
+      - image: circleci/python:3.8.7
+    working_directory: ~/work
+
+orbs:
+  aws-cli: circleci/aws-cli@2.0.3
+
+commands:
+  lint_and_test:
+    steps:
+      - run:
+          name: lint and test
+          command: echo "any lint and test here"
+  deploy:
+    steps:
+      - run:
+          name: deploy
+          command: |
+            aws --version
+            aws lambda list-functions
+
+jobs:
+  lint_and_test:
+    executor: deploy_container
+    steps:
+      - chechout
+      - lint_and_test
+  
+  deploy:
+    executor: deploy_container
+    steps:
+      - checkout
+      - aws-cli/install
+      - deploy
+
+workflows:
+  version: 2
+  first-workflow:
+    jobs:
+      - lint_and_test:
+          filters:
+            branches:
+              only: master
+      - deploy:
+          filters:
+            branches:
+              only: master
