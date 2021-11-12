@@ -26,7 +26,7 @@ jobs:
   lint_and_test:
     executor: deploy_container
     steps:
-      - chechout
+      - checkout
       - lint_and_test
   
   deploy:
