@@ -12,10 +12,10 @@ commands:
   install_dependency:
     steps:
       - run:
-        name: pip insall
-        command: |
-          mkdir packages
-          pip install -r requirements.txt -t ./packages
+          name: pip insall
+          command: |
+            mkdir packages
+            pip install -r requirements.txt -t ./packages
   lint_and_test:
     steps:
       - run:
