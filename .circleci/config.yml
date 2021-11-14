@@ -34,7 +34,7 @@ commands:
           name: deploy
           command: |
             aws --version
-            aws lambda update-function-code --function-name circleci-trial-func --zip-file fileb://deploy-packages.zip
+            aws lambda update-function-code --function-name circleci-trial-func --zip-file fileb://deploy-files.zip
 
 jobs:
   lint_and_test:
