@@ -3,7 +3,7 @@ import requests
 
 def lambda_handler(event, context):
     response = requests.get("https://www.kke.co.jp/")
-    print("Hello, world")
+    print("Hello, World!")
     print(response.text)    
     return {
         'statusCode': 200,

@@ -9,24 +9,39 @@ orbs:
   aws-cli: circleci/aws-cli@2.0.3
 
 commands:
+  install_dependency:
+    steps:
+      - run:
+        name: pip insall
+        command: |
+          mkdir packages
+          pip install -r requirements.txt -t ./packages
   lint_and_test:
     steps:
       - run:
           name: lint and test
           command: echo "any lint and test here"
+  create_artifact:
+    steps:
+      - run:
+          name: create zip file
+          command: |
+            zip -r deploy-files.zip ./packages
+            zip deploy-files.zip lambda_function.py
   deploy:
     steps:
       - run:
           name: deploy
           command: |
             aws --version
-            aws lambda list-functions
+            aws lambda update-function-code --function-name circleci-trial-func --zip-file fileb://deploy-packages.zip
 
 jobs:
   lint_and_test:
     executor: deploy_container
     steps:
       - checkout
+      - install_dependency
       - lint_and_test
   
   deploy:
@@ -34,6 +49,8 @@ jobs:
     steps:
       - checkout
       - aws-cli/install
+      - install_dependency
+      - create_artifact
       - deploy
 
 workflows:
